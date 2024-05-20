@@ -3,7 +3,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://0.0.0.0:3001/api',
+  baseURL: 'https://bookshelf-ekzd.onrender.com/api',
+  // baseURL: 'http://0.0.0.0:3001/api',
 });
 
 axiosInstance.interceptors.request.use((config) => {

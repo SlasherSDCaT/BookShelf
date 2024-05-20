@@ -23,7 +23,7 @@ const LogPage = () => {
         event.preventDefault()
         if (inf.password.length > 7) {
             try {
-                const data = await axios.post("http://0.0.0.0:3001/auth/sing-in", {
+                const data = await axios.post("https://bookshelf-ekzd.onrender.com/auth/sing-in", { //
                     Username: inf.email,
                     Password: inf.password
                 })
