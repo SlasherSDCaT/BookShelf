@@ -24,7 +24,7 @@ const RegPage = () => {
         event.preventDefault()
         if (inf.password === inf.conf && inf.password.length > 7) {
             try {
-                const data = await axios.post("https://bookshelf-ekzd.onrender.com/auth/sing-up", { // http://0.0.0.0:3001
+                const data = await axios.post("https://bookshelf-cq3i.onrender.com/auth/sing-up", { // http://0.0.0.0:3001
                     Username: inf.email,
                     Password: inf.password,
                     Role: "USER"
