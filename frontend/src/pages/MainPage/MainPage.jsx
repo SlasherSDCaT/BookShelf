@@ -8,15 +8,17 @@ import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
   const cookie = new Cookies()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = cookie.get('token');
     if (!token) {
       // return <Navigate to="/login" />; // You can use this if using React Router v6
-      window.location.href = '/login';
+      navigate("/login");
     }
   }, []);
 
