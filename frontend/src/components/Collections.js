@@ -66,7 +66,7 @@ const Collections = () => {
                                 <Card.Img variant="top" src={book.image} style={{ height: '16rem', objectFit: 'cover' }}/>
                                 <Card.Body>
                                     <Card.Title>{book.title}</Card.Title>
-                                    <Card.Text>{book.description}</Card.Text>
+                                    <Card.Text>{book.body}</Card.Text>
                                 </Card.Body>
                             </Card>
                         ))}

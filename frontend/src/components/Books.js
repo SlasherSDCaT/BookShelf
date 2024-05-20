@@ -35,7 +35,6 @@ const Books = () => {
                 <Card.Img variant="top" src={book.image} style={{ height: '20rem', objectFit: 'cover'}}/>
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
-                  <Card.Text>{book.description}</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -74,9 +73,9 @@ const Books = () => {
                       {comments.map((comment) => (
                         <ListGroup.Item key={comment.id}>
                           {comment.text}
-                          <Button variant="secondary">
+                          {/* <Button variant="secondary">
                             Удалить
-                          </Button>
+                          </Button> */}
                         </ListGroup.Item>
                       ))}
                     </ListGroup>
