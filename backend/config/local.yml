@@ -13,7 +13,7 @@ server:
 
 db:
  user: slashersdcat
- password: postgres
+ password: I01OL8DaGFnfIfnFR2J0Zk1Bkhf6ynKg
  name: bookshelf
  host: localhost
  port: 5432

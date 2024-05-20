@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -19,7 +18,7 @@ const (
 	COLLECTION_BOOKS   = "collections_books"
 	COMMENTS           = "comments"
 	COLLECTION_RATINGS = "collection_ratings"
-	PARSEDATE = "02-01-2006"
+	PARSEDATE          = "02-01-2006"
 )
 
 func runMigrations(db *sql.DB, migrationsPath string) error {
@@ -53,8 +52,10 @@ func runMigrations(db *sql.DB, migrationsPath string) error {
 func InitializeDB() (*sql.DB, error) {
 	info := config.GetConf().DB
 
-	urlPostgres := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=%s port=%d",
-		info.User, info.Name, info.Password, info.Host, info.Port)
+	// urlPostgres := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=%s port=%d",
+	// 	info.User, info.Name, info.Password, info.Host, info.Port)
+
+	urlPostgres := "postgres://slashersdcat:I01OL8DaGFnfIfnFR2J0Zk1Bkhf6ynKg@dpg-cp5nbtn79t8c73f1m51g-a/bookshelf_lo2k"
 
 	db, err := sql.Open("postgres", urlPostgres)
 	if err != nil {
