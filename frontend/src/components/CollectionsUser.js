@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCollectionById, fetchCollectionByUser, fetchCollections } from '../redux/slice/collectionsSlice';
+import { deleteCollection, fetchCollectionById, fetchCollectionByUser, fetchCollections, deleteBookToCollection } from '../redux/slice/collectionsSlice';
 import { Card, Row, Col, Modal, Button } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
@@ -36,6 +36,20 @@ const CollectionsUser = () => {
         setShowBookModal(true);
     };
 
+    const handleDeleteConfirm = async (id) => {
+        console.log("Load " + id);
+        dispatch(deleteCollection(id));
+        console.log("Delete");
+        setTimeout(() => window.location.reload(), 500)
+      };
+    
+      const handleDeleteToCollection = (collectionId, bookId) => {
+        console.log('load ' + collectionId);
+        dispatch(deleteBookToCollection({ collectionId, bookId }));
+        setShowBookModal(false);
+        setShowCollectionModal(false);
+      };
+
     return (
         <>
             <Row>
@@ -65,14 +79,14 @@ const CollectionsUser = () => {
                                 <Card.Img variant="top" src={book.image} style={{ height: '16rem', objectFit: 'cover' }}/>
                                 <Card.Body>
                                     <Card.Title>{book.title}</Card.Title>
-                                    <Card.Text>{book.description}</Card.Text>
+                                    <Card.Text>{book.body}</Card.Text>
                                 </Card.Body>
                             </Card>
                         ))}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button>
-                            Обновить
+                        <Button variant="danger" onClick={() => handleDeleteConfirm(selectedCollection.collection_id)}>
+                            Удалить
                         </Button>
                     </Modal.Footer>
                 </Modal>
@@ -89,7 +103,7 @@ const CollectionsUser = () => {
                         <p><strong>Описание:</strong> {selectedBook.description}</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant='danger'>
+                        <Button variant='danger' onClick={() => handleDeleteToCollection(selectedCollection.collection_id, selectedBook.book_id)}>
                             Удалить из коллекции
                         </Button>
                     </Modal.Footer>

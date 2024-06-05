@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCollectionById, fetchCollections, fetchCollectionByUser } from '../redux/slice/collectionsSlice';
-import { Card, Row, Col, Modal, Button } from 'react-bootstrap';
+import { fetchCollectionById, fetchCollections, fetchCollectionByUser, rateCollection } from '../redux/slice/collectionsSlice';
+import { Card, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
-import booksSlice from '../redux/slice/booksSlice';
 
 const Collections = () => {
     const dispatch = useDispatch();
     const collections = useSelector((state) => state.collections.collections);
     const collectionStatus = useSelector((state) => state.collections.status);
     const selectedCollection = useSelector((state) => state.collections.selectedCollection);
+    const cookie = new Cookies();
+    const user_id = cookie.get('user_id');
 
     const [showCollectionModal, setShowCollectionModal] = useState(false);
     const [showBookModal, setShowBookModal] = useState(false);
+    const [showRatingModal, setShowRatingModal] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
-    const cookie = new Cookies();
-    const user_id = cookie.get('user_id');
+    const [rating, setRating] = useState(1);
 
     useEffect(() => {
         if (collectionStatus === 'idle') {
@@ -26,6 +27,7 @@ const Collections = () => {
 
     const handleCloseCollectionModal = () => setShowCollectionModal(false);
     const handleCloseBookModal = () => setShowBookModal(false);
+    const handleCloseRatingModal = () => setShowRatingModal(false);
 
     const handleShowCollectionModal = (collectionId) => {
         dispatch(fetchCollectionById(collectionId));
@@ -35,6 +37,21 @@ const Collections = () => {
     const handleShowBookModal = (book) => {
         setSelectedBook(book);
         setShowBookModal(true);
+    };
+
+    const handleShowRatingModal = () => {
+        setRating(selectedCollection.rating || 1);
+        setShowRatingModal(true);
+    };
+
+    const handleRatingChange = (e) => {
+        setRating(Number(e.target.value));
+    };
+
+    const handleRatingSubmit = (e) => {
+        e.preventDefault();
+        dispatch(rateCollection({ collectionId: selectedCollection.collection_id, rating }));
+        setShowRatingModal(false);
     };
 
     return (
@@ -72,7 +89,7 @@ const Collections = () => {
                         ))}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button>
+                        <Button onClick={handleShowRatingModal}>
                             Оценить
                         </Button>
                     </Modal.Footer>
@@ -93,6 +110,31 @@ const Collections = () => {
                     </Modal.Footer>
                 </Modal>
             )}
+
+            <Modal show={showRatingModal} onHide={handleCloseRatingModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Оценить коллекцию</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleRatingSubmit}>
+                        <Form.Group controlId="rating">
+                            <Form.Label>Рейтинг</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="rating"
+                                value={rating}
+                                onChange={handleRatingChange}
+                                min={1}
+                                max={5}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Оценить
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
         </>
     );
 };

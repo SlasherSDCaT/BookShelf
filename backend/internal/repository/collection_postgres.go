@@ -76,12 +76,21 @@ func (r *CollectionPostgres) Update(id int, input DTO.CollectionUpdate) error {
 
 // Delete removes a collection from the database
 func (r *CollectionPostgres) Delete(id int) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE collection_id=$1", db.COLLECTIONS)
-	if _, err := r.db.Exec(query, id); err != nil {
-		log.Panic(err)
-		return err
-	}
-	return nil
+    // Удаление записей из таблицы связи CollectionBook
+    deleteCollectionBooksQuery := fmt.Sprintf("DELETE FROM %s WHERE collection_id=$1", db.COLLECTION_BOOKS)
+    if _, err := r.db.Exec(deleteCollectionBooksQuery, id); err != nil {
+        log.Panic(err)
+        return err
+    }
+
+    // Удаление записи из таблицы Collections
+    deleteCollectionQuery := fmt.Sprintf("DELETE FROM %s WHERE collection_id=$1", db.COLLECTIONS)
+    if _, err := r.db.Exec(deleteCollectionQuery, id); err != nil {
+        log.Panic(err)
+        return err
+    }
+
+    return nil
 }
 
 func (r *CollectionPostgres) GetAll() ([]DTO.CollectionDTO, error) {

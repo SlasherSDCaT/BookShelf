@@ -13,7 +13,7 @@ server:
 
 db:
  user: slashersdcat
- password: I01OL8DaGFnfIfnFR2J0Zk1Bkhf6ynKg
+ password: JdSOaFfRlgLpZnp7PkZ2sKzWOgW0EDzZ
  name: bookshelf
  host: localhost
  port: 5432

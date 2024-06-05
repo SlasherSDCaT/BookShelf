@@ -23,7 +23,7 @@ const LogPage = () => {
         event.preventDefault()
         if (inf.password.length > 7) {
             try {
-                const data = await axios.post("https://bookshelf-cq3i.onrender.com/auth/sing-in", { //
+                const data = await axios.post("https://bookshelf-cq3i.onrender.com/auth/sing-in", { //https://bookshelf-cq3i.onrender.com/auth/sing-in"
                     Username: inf.email,
                     Password: inf.password
                 })

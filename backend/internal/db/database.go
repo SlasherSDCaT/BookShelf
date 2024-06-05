@@ -55,7 +55,8 @@ func InitializeDB() (*sql.DB, error) {
 	// urlPostgres := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=%s port=%d",
 	// 	info.User, info.Name, info.Password, info.Host, info.Port)
 
-	urlPostgres := "postgres://slashersdcat:I01OL8DaGFnfIfnFR2J0Zk1Bkhf6ynKg@dpg-cp5nbtn79t8c73f1m51g-a/bookshelf_lo2k"
+	// urlPostgres := "postgres://slashersdcat:I01OL8DaGFnfIfnFR2J0Zk1Bkhf6ynKg@dpg-cp5nbtn79t8c73f1m51g-a/bookshelf_lo2k"
+	urlPostgres := "postgres://slashersdcat:JdSOaFfRlgLpZnp7PkZ2sKzWOgW0EDzZ@dpg-cpfr8lv79t8c73e8ndb0-a/bookshelf_57rn"
 
 	db, err := sql.Open("postgres", urlPostgres)
 	if err != nil {

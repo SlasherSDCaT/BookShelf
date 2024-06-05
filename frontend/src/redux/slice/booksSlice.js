@@ -16,6 +16,16 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
     const response = await axiosInstance.post('/books', bookData);
     return response.data;
   });
+
+  export const deleteBook = createAsyncThunk('books/deleteBook', async (book_id) => {
+    const response = await axiosInstance.delete(`/books/${book_id}`);
+    return response.data;
+  });
+  export const addComment = createAsyncThunk('books/addComment', async (commentData) => {
+    console.log(commentData)
+    const response = await axiosInstance.post('/comments', commentData);
+    return response.data;
+});
   
   const booksSlice = createSlice({
     name: 'books',
@@ -53,6 +63,13 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
         .addCase(fetchComment.fulfilled, (state, action) => {
           state.status = 'succeeded';
           state.comment = action.payload;
+        })
+        .addCase(addComment.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.comment.push(action.payload);
+        })
+        .addCase(deleteBook.fulfilled, (state, action) => {
+          state.status = 'succeeded';
         });
     },
   });  

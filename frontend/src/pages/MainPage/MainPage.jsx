@@ -41,9 +41,9 @@ function MainPage() {
           <Accordion.Header>Книги</Accordion.Header>
           <Accordion.Body>
           <h2 style={{display: 'inline' }}>Книги</h2>
-          <Button style={{ marginLeft: '63rem', marginBottom: '10px' }}>
+          {/* <Button style={{ marginLeft: '63rem', marginBottom: '10px' }}>
             Найти по жанру
-          </Button>
+          </Button> */}
           <Books />
           </Accordion.Body>
         </Accordion.Item>

@@ -86,12 +86,21 @@ func (r *BookPostgres) Update(id int, input DTO.BookUpdate) error {
 
 // Delete removes a book from the database
 func (r *BookPostgres) Delete(id int) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE book_id=$1", db.BOOKS)
-	if _, err := r.db.Exec(query, id); err != nil {
-		log.Panic(err)
-		return err
-	}
-	return nil
+    // Удаление всех комментариев, связанных с книгой
+    deleteCommentsQuery := fmt.Sprintf("DELETE FROM %s WHERE book_id=$1", db.COMMENTS)
+    if _, err := r.db.Exec(deleteCommentsQuery, id); err != nil {
+        log.Panic(err)
+        return err
+    }
+
+    // Удаление записи из таблицы Books
+    deleteBookQuery := fmt.Sprintf("DELETE FROM %s WHERE book_id=$1", db.BOOKS)
+    if _, err := r.db.Exec(deleteBookQuery, id); err != nil {
+        log.Panic(err)
+        return err
+    }
+
+    return nil
 }
 
 // FindAll retrieves all books from the database
